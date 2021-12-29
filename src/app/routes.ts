@@ -1,9 +1,14 @@
 import {  Routes  } from '@angular/router';
-import { EventsListComponent } from './events/events-list.component';
-import { EventDetailsComponent } from './events/event-details/event-details.component';
-import { CreateEventComponent } from './events/event-create/create-event.component';
+
+import {
+  CreateEventComponent,
+  EventDetailsComponent,
+  EventRouteActivator,
+  EventsListComponent,
+  EventsListResolver,
+} from './events/index';
+
 import { Error404Component } from './errors/404.component';
-import { EventRouteActivator } from './events/event-details/event-route-activator.service';
 
 
 export const appRoutes: Routes = [
@@ -11,7 +16,8 @@ export const appRoutes: Routes = [
     path: 'events/create', component: CreateEventComponent, canDeactivate: ['canDeactivateCreateEvent']
   },
   {
-    path: 'events', component: EventsListComponent
+    // first activate EventsListResolver, get data and put them in the property "events"
+    path: 'events', component: EventsListComponent, resolve: { events: EventsListResolver }
   },
   {
     path: 'events/:id', component: EventDetailsComponent, canActivate: [EventRouteActivator]
@@ -21,6 +27,10 @@ export const appRoutes: Routes = [
   },
   {
     path: '', redirectTo: '/events', pathMatch: 'full'
+  },
+  {
+    path: 'user', loadChildren: () => import('./user/user.module')
+      .then(module => module.UserModule) // loads a new module, lazy
   },
 ];
 
