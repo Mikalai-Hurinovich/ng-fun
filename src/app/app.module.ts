@@ -1,22 +1,27 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import {
+  CreateEventComponent,
+  EventDetailsComponent,
+  EventRouteActivator,
+  EventService,
+  EventsListComponent,
+  EventsListResolver,
+  EventThumbnailComponent
+} from './events';
+
 import { AppComponent } from './app.component';
-import { EventsListComponent } from './events/events-list.component';
-import { EventThumbnailComponent } from './events/event-thumbnail/event-thumbnail.component';
 import { NavComponent } from './nav/nav.component';
-import { EventService } from './events/shared/event.service';
 import { ToastrService } from './common/toastr.service';
-import { EventDetailsComponent } from './events/event-details/event-details.component';
 import { RouterModule } from '@angular/router';
 import { appRoutes } from './routes';
-import { CreateEventComponent } from './events/event-create/create-event.component';
 import { Error404Component } from './errors/404.component';
-import { EventRouteActivator } from './events/event-details/event-route-activator.service';
+import { UserModule } from './user/user.module';
 
 
 @NgModule({
-    imports: [BrowserModule, RouterModule.forRoot(appRoutes)],
+    imports: [BrowserModule, UserModule, RouterModule.forRoot(appRoutes)],
     declarations: [
       AppComponent,
       EventsListComponent,
@@ -26,7 +31,7 @@ import { EventRouteActivator } from './events/event-details/event-route-activato
       NavComponent,
       Error404Component
     ],
-    providers: [EventService, ToastrService, EventRouteActivator,
+    providers: [EventService, ToastrService, EventRouteActivator, EventsListResolver,
       {
         provide: 'canDeactivateCreateEvent', useValue: checkDirtyState
       }],
@@ -36,10 +41,10 @@ import { EventRouteActivator } from './events/event-details/event-route-activato
 export class AppModule {
 }
 
-export function checkDirtyState(component: CreateEventComponent): boolean {
+function checkDirtyState(component: CreateEventComponent): boolean {
   if (component.isDirty) {
-    return window.confirm('You have not saved this event, do you really want to cancel?');
+    return window.confirm('All unsaved data may be lost, do you really want to cancel?');
   }
   return true;
-};
+}
 

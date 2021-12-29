@@ -5,6 +5,9 @@
 .nav.navbar-nav {
   font-size: 15px;
 }
+li > a.active {
+  color: #F97924;
+}
 
 #searchForm {
   margin-right: 20px;
