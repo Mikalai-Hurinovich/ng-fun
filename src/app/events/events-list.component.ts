@@ -2,23 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from './shared/event.service';
 import { ToastrService } from '../common/toastr.service';
 import { ActivatedRoute } from '@angular/router';
-
-interface ILocation {
-  address: string;
-  city: string;
-  country: string;
-}
-
-export interface IEvent {
-  id: number;
-  name: string;
-  date: string;
-  time: string;
-  price: number;
-  imageUrl: string;
-  location?: ILocation;
-  onlineUrl?: string;
-}
+import { IEvent } from './shared';
 
 @Component({
   template: `
@@ -35,9 +19,10 @@ export interface IEvent {
   styleUrls: ['events-list.component.scss'],
 })
 export class EventsListComponent implements OnInit {
-  events: any;
+  events: Array<IEvent>;
 
-  constructor(private readonly eventService: EventService, private readonly toastr: ToastrService, private readonly route: ActivatedRoute) {}
+  constructor(private readonly eventService: EventService, private readonly toastr: ToastrService,
+              private readonly route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.events = this.route.snapshot.data.events;
