@@ -3,26 +3,19 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProfileComponent } from './profile/profile.component';
 import { userRoutes } from './user-routes';
+import { LoginComponent } from './login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild(userRoutes)
   ],
-  declarations: [ProfileComponent],
-  providers: [
-    {
-      provide: 'canDeactivateProfile', useValue: checkDirtyState
-    }
-  ]
+  declarations: [ProfileComponent, LoginComponent],
+  providers: []
 })
 
 export class UserModule {
-}
-
-function checkDirtyState(component: ProfileComponent): boolean {
-  if (component.isDirty) {
-    return window.confirm('All unsaved data may be lost, do you really want to cancel?');
-  }
-  return true;
 }
