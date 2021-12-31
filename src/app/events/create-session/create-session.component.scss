@@ -1,0 +1,25 @@
+@import '../../core/utils/utils';
+
+.error {
+  & input, textarea, select {
+    background-color: #ea8d93;
+    color: white;
+  }
+
+  &::-webkit-input-placeholder {
+    color: #999;
+  }
+
+  &::-moz-placeholder {
+    color: #999;
+  }
+
+  &:-moz-placeholder {
+    color: #999;
+  }
+
+  &::-ms-input-placeholder {
+    color: #999;
+  }
+}
+@include form-group-styles;
