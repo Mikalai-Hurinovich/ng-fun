@@ -1,20 +1,3 @@
-.form-group {
-  position: relative;
-  & > em {
-    position: absolute;
-    top: 0;
-    right: 0;
-    color: #E05C65;
-  }
-}
-
-.error {
-  & input {
-  background-color: #ea8d93;
-  }
-  &::-webkit-input-placeholder {color: #999;}
-  &::-moz-placeholder {color: #999;}
-  &:-moz-placeholder {color: #999;}
-  &::-ms-input-placeholder {color: #999;}
-}
-
+@import  '../../core/utils/utils';
+@include form-group-styles;
+@include form-group-error;
