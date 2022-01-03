@@ -1,9 +1,8 @@
 import { Injectable, Pipe } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { EventService } from './shared/event.service';
+import { EventService, IEvent } from './shared';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { IEvent } from './shared';
 
 
 @Injectable()
