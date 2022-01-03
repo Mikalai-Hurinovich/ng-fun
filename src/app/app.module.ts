@@ -3,12 +3,14 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import {
   CreateEventComponent,
+  CreateSessionComponent,
   EventDetailsComponent,
   EventRouteActivator,
   EventService,
   EventsListComponent,
   EventsListResolver,
-  EventThumbnailComponent
+  EventThumbnailComponent,
+  SessionListComponent
 } from './events';
 
 import { AppComponent } from './app.component';
@@ -20,7 +22,6 @@ import { Error404Component } from './errors/404.component';
 import { UserModule } from './user/user.module';
 import { AuthService } from './user/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CreateSessionComponent } from './events/create-session/create-session.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { CreateSessionComponent } from './events/create-session/create-session.c
       EventDetailsComponent,
       NavComponent,
       Error404Component,
-      CreateSessionComponent
+      CreateSessionComponent,
+      SessionListComponent
     ],
     providers: [EventService, ToastrService, EventRouteActivator, EventsListResolver, AuthService,
       {

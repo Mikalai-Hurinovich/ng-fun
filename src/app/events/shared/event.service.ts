@@ -23,6 +23,11 @@ export class EventService {
     EVENTS.unshift(event);
   }
 
+  updateEvent(event: IEvent): void {
+    const index = EVENTS.findIndex(x => x.id = event.id);
+    EVENTS[index] = event;
+  }
+
 }
 
 const EVENTS: IEvent[] = [
@@ -369,6 +374,6 @@ const EVENTS: IEvent[] = [
         voters: ['bradgreen', 'igorminar', 'johnpapa']
       }
     ]
-  },
+  }
 
 ];
