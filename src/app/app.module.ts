@@ -10,7 +10,8 @@ import {
   EventsListComponent,
   EventsListResolver,
   EventThumbnailComponent,
-  SessionListComponent
+  SessionListComponent,
+  DurationPipe
 } from './events';
 
 import { AppComponent } from './app.component';
@@ -37,7 +38,8 @@ import { CollapsibleWellComponent } from './common/collapsible-well/collapsible-
       Error404Component,
       CreateSessionComponent,
       SessionListComponent,
-      CollapsibleWellComponent
+      CollapsibleWellComponent,
+      DurationPipe
     ],
     providers: [EventService, ToastrService, EventRouteActivator, EventsListResolver, AuthService,
       {

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EventService } from '../shared';
+import { EventService, IEvent, ISession } from '../shared';
 import { ActivatedRoute } from '@angular/router';
-import { IEvent, ISession } from '../shared';
 
 @Component({
   templateUrl: './event-details.component.html',
@@ -9,8 +8,11 @@ import { IEvent, ISession } from '../shared';
 })
 
 export class EventDetailsComponent implements OnInit {
+
   event: IEvent;
   addMode: boolean;
+  filterBy = 'all';
+  sortBy = 'name';
 
   constructor(private eventService: EventService, private route: ActivatedRoute) {
   }
