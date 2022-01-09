@@ -1,30 +1,31 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
 import {
   CreateEventComponent,
   CreateSessionComponent,
+  DurationPipe,
   EventDetailsComponent,
   EventRouteActivator,
   EventService,
   EventsListComponent,
   EventsListResolver,
   EventThumbnailComponent,
-  SessionListComponent,
-  DurationPipe
+  SessionListComponent
 } from './events';
 
-import { AppComponent } from './app.component';
-import { NavComponent } from './nav/nav.component';
-import { ToastrService } from './common/toastr.service';
-import { RouterModule } from '@angular/router';
-import { appRoutes } from './routes';
-import { Error404Component } from './errors/404.component';
-import { UserModule } from './user/user.module';
-import { AuthService } from './user/auth.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CollapsibleWellComponent } from './common/collapsible-well/collapsible-well.component';
+import {AppComponent} from './app.component';
+import {NavComponent} from './nav/nav.component';
+import {IToastr, TOASTR_TOKEN} from './common/toastr.service';
+import {RouterModule} from '@angular/router';
+import {appRoutes} from './routes';
+import {Error404Component} from './errors/404.component';
+import {UserModule} from './user/user.module';
+import {AuthService} from './user/auth.service';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CollapsibleWellComponent} from './common/collapsible-well/collapsible-well.component';
 
+declare let toastr: IToastr;
 
 @NgModule({
     imports: [BrowserModule, UserModule, FormsModule, ReactiveFormsModule, RouterModule.forRoot(appRoutes)],
@@ -41,7 +42,11 @@ import { CollapsibleWellComponent } from './common/collapsible-well/collapsible-
       CollapsibleWellComponent,
       DurationPipe
     ],
-    providers: [EventService, ToastrService, EventRouteActivator, EventsListResolver, AuthService,
+    providers: [EventService,
+      {
+        provide: TOASTR_TOKEN,
+        useValue: toastr
+      }, EventRouteActivator, EventsListResolver, AuthService,
       {
         provide: 'canDeactivateCreateEvent', useValue: checkDirtyState
       }],
