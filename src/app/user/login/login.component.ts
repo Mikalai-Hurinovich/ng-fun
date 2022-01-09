@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth.service';
-import { Router } from '@angular/router';
+import {Component, Inject, OnInit} from '@angular/core';
+import {AuthService} from '../auth.service';
+import {Router} from '@angular/router';
+import {IToastr, TOASTR_TOKEN} from '../../common/toastr.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,9 @@ export class LoginComponent implements OnInit {
   userPassword: number;
   mouseoverLogin: boolean;
 
-  constructor(private readonly authService: AuthService, private readonly router: Router) {
+  constructor(private readonly authService: AuthService, private readonly router: Router,
+              @Inject(TOASTR_TOKEN) private readonly toastr: IToastr
+  ) {
   }
 
   ngOnInit(): void {
@@ -22,6 +25,7 @@ export class LoginComponent implements OnInit {
   login(formValues): void {
     this.authService.loginUser(formValues.userName, formValues.password);
     this.router.navigate(['events']);
+    this.toastr.success(`You have successfully login as ${formValues.userName}`);
   }
 
   handleCancel(): void {

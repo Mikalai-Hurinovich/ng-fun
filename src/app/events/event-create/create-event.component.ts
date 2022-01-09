@@ -1,9 +1,7 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { EventService, IEvent } from '../shared';
-import { ToastrService } from '../../common/toastr.service';
-
-
+import {Component, Inject} from '@angular/core';
+import {Router} from '@angular/router';
+import {EventService, IEvent} from '../shared';
+import {IToastr, TOASTR_TOKEN} from '../../common/toastr.service';
 
 @Component({
   templateUrl: './create-event.component.html',
@@ -16,7 +14,8 @@ export class CreateEventComponent {
 
   newEvent?: any;
 
-  constructor(private readonly router: Router, private readonly eventService: EventService, private readonly toastr: ToastrService) {
+  constructor(private readonly router: Router, private readonly eventService: EventService,
+              @Inject(TOASTR_TOKEN) private readonly toastr: IToastr) {
   }
 
   handleCancelButtonClick(): void {
