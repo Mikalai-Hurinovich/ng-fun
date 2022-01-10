@@ -17,7 +17,6 @@ export class NavComponent {
   handleSearchSessions(searchTerm: string): void {
     this.eventService.searchSessions(searchTerm).subscribe(sessions => {
       this.foundSessions = sessions;
-      console.log(this.foundSessions);
     });
   }
 }
