@@ -1,6 +1,6 @@
-import {NgModule} from '@angular/core';
-import {RouterModule} from '@angular/router';
-import {BrowserModule} from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
 
 import {
   CreateEventComponent,
@@ -12,17 +12,20 @@ import {
   EventsListComponent,
   EventsListResolver,
   EventThumbnailComponent,
-  SessionListComponent
+  LocationValidator,
+  SessionListComponent,
+  UpvoteComponent,
+  VoterService
 } from './events';
 
-import {AppComponent} from './app.component';
-import {NavComponent} from './nav/nav.component';
-import {IToastr, TOASTR_TOKEN, CollapsibleWellComponent, JQ_TOKEN, SimpleModalComponent, ModalTriggerDirective} from './common';
-import {appRoutes} from './routes';
-import {Error404Component} from './errors/404.component';
-import {UserModule} from './user/user.module';
-import {AuthService} from './user/auth.service';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { AppComponent } from './app.component';
+import { NavComponent } from './nav/nav.component';
+import { CollapsibleWellComponent, IToastr, JQ_TOKEN, ModalTriggerDirective, SimpleModalComponent, TOASTR_TOKEN } from './common';
+import { appRoutes } from './routes';
+import { Error404Component } from './errors/404.component';
+import { UserModule } from './user/user.module';
+import { AuthService } from './user/auth.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const toastr: IToastr = window['toastr'];
 const jQuery = window['$'];
@@ -34,6 +37,7 @@ const jQuery = window['$'];
       EventsListComponent,
       CreateEventComponent,
       EventThumbnailComponent,
+      UpvoteComponent,
       EventDetailsComponent,
       NavComponent,
       Error404Component,
@@ -41,10 +45,11 @@ const jQuery = window['$'];
       SessionListComponent,
       CollapsibleWellComponent,
       DurationPipe,
+      LocationValidator,
       SimpleModalComponent,
       ModalTriggerDirective
     ],
-    providers: [EventService,
+    providers: [EventService, VoterService,
       {
         provide: TOASTR_TOKEN,
         useValue: toastr

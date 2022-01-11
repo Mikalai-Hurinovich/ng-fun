@@ -1,4 +1,10 @@
 <div class="row" *ngFor="let session of visibleSessions">
+  <div *ngIf="auth.isAuth()">
+    <div class="col-md-1">
+      <app-upvote (vote)="handleToggleVote(session)" [count]="session.voters.length"
+                  [voted]="userHasVoted(session)"></app-upvote>
+    </div>
+  </div>
   <div class="col-md-10">
     <app-collapsible-well>
       <!--     well-... помогает определить какой из ng-content использовать -->
