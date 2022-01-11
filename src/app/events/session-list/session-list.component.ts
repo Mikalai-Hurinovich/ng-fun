@@ -1,5 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ISession } from '../shared';
+import { AuthService } from '../../user/auth.service';
+import { VoterService } from '../upvote/voter.service';
 
 @Component({
   selector: 'app-session-list',
@@ -15,11 +17,29 @@ export class SessionListComponent implements OnChanges {
 
 // interface OnChanges, будет вызываться каждый раз, когда изменяется значение входных данных (Input())
 
+  constructor(private readonly auth: AuthService, private readonly voterService: VoterService) {
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (this.sessions) {
       this.filterSessions(this.filterBy);
       this.sortBy === 'name' ? this.visibleSessions.sort(this.sortByNameAsc) : this.visibleSessions.sort(this.sortByVotersDesc);
     }
+  }
+
+  handleToggleVote(session: ISession): void {
+    if (this.userHasVoted(session)) {
+      this.voterService.deleteVoter(session, this.auth.currentUser.userName);
+    } else {
+      this.voterService.addVoter(session, this.auth.currentUser.userName);
+    }
+    if (this.sortBy === 'votes') {
+      this.visibleSessions.sort(this.sortByVotersDesc);
+    }
+  }
+
+  userHasVoted(session: ISession): boolean {
+    return this.voterService.userHasVoted(session, this.auth.currentUser.userName);
   }
 
   sortByNameAsc(a: ISession, b: ISession): number {
@@ -33,7 +53,7 @@ export class SessionListComponent implements OnChanges {
   }
 
   sortByVotersDesc(a: ISession, b: ISession): number {
-   return b.voters.length - a.voters.length;
+    return b.voters.length - a.voters.length;
   }
 
   private filterSessions(filter: string): void {

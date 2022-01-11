@@ -6,3 +6,6 @@ export * from './event-thumbnail/event-thumbnail.component';
 export * from './session-list/session-list.component';
 export * from './shared/index';
 export * from './event-details/index';
+export * from './upvote/upvote.component';
+export * from './upvote/voter.service';
+export * from './event-create/location-validator.directive';
