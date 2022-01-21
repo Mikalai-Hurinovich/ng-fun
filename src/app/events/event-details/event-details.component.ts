@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {EventService, IEvent, ISession} from '../shared';
-import {ActivatedRoute, Params} from '@angular/router';
+import { Component, Inject, OnInit } from '@angular/core';
+import { EventService, IEvent, ISession } from '../shared';
+import { ActivatedRoute, Params } from '@angular/router';
+import { IToastr, TOASTR_TOKEN } from '../../common';
 
 @Component({
   templateUrl: './event-details.component.html',
@@ -14,13 +15,13 @@ export class EventDetailsComponent implements OnInit {
   filterBy = 'all';
   sortBy = 'name';
 
-  constructor(private eventService: EventService, private route: ActivatedRoute) {
+  constructor(private eventService: EventService, private route: ActivatedRoute,  @Inject(TOASTR_TOKEN) private readonly toastr: IToastr) {
   }
 
   ngOnInit(): void {
-    this.route.params.forEach((params: Params) => {
-      this.event = this.eventService.getEvent(+params.id);
-      this.addMode = false;
+    this.route.data.forEach((data) => {
+        this.event = data.event;
+        this.addMode = false;
     });
   }
 
@@ -32,8 +33,16 @@ export class EventDetailsComponent implements OnInit {
     const nextId = Math.max(...this.event.sessions.map(s => s.id));
     session.id = nextId + 1;
     this.event.sessions.push(session);
-    this.eventService.updateEvent(this.event);
-    this.addMode = false;
+    this.eventService.saveEvent(this.event).subscribe({
+      next: () => {
+        this.addMode = false;
+        this.toastr.success('Event was created');
+      },
+      error: () => {
+        this.toastr.error('Something go wrong was created');
+
+      }
+    });
   }
 
   cancelAddSession(): void {

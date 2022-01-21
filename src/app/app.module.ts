@@ -7,7 +7,7 @@ import {
   CreateSessionComponent,
   DurationPipe,
   EventDetailsComponent,
-  EventRouteActivator,
+  EventResolver,
   EventService,
   EventsListComponent,
   EventsListResolver,
@@ -26,12 +26,13 @@ import { Error404Component } from './errors/404.component';
 import { UserModule } from './user/user.module';
 import { AuthService } from './user/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 const toastr: IToastr = window['toastr'];
 const jQuery = window['$'];
 
 @NgModule({
-    imports: [BrowserModule, UserModule, FormsModule, ReactiveFormsModule, RouterModule.forRoot(appRoutes)],
+    imports: [BrowserModule, UserModule, FormsModule, ReactiveFormsModule, HttpClientModule, RouterModule.forRoot(appRoutes)],
     declarations: [
       AppComponent,
       EventsListComponent,
@@ -57,7 +58,9 @@ const jQuery = window['$'];
         provide: JQ_TOKEN,
         useValue: jQuery
       },
-      EventRouteActivator, EventsListResolver, AuthService,
+      EventsListResolver,
+      AuthService,
+      EventResolver,
       {
         provide: 'canDeactivateCreateEvent', useValue: checkDirtyState
       }],
