@@ -1,8 +1,8 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../auth.service';
-import {IToastr, TOASTR_TOKEN} from '../../common/toastr.service';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../auth.service';
+import { IToastr, TOASTR_TOKEN } from '../../common/toastr.service';
 
 // import { ToastrService } from '../../common/toastr.service';
 
@@ -18,8 +18,10 @@ export class ProfileComponent implements OnInit {
   private firstName: FormControl;
   private lastName: FormControl;
 
-  constructor(private readonly router: Router, private readonly authService: AuthService,
-              @Inject(TOASTR_TOKEN) private readonly toastr: IToastr) {
+  constructor(
+    private readonly router: Router,
+    private readonly authService: AuthService,
+    @Inject(TOASTR_TOKEN) private readonly toastr: IToastr) {
   }
 
   ngOnInit(): void {
@@ -47,8 +49,16 @@ export class ProfileComponent implements OnInit {
 
   handleSaveProfile(values: any): void {
     if (this.profileForm.valid) {
-      this.authService.updateCurrentUser(values.firstName, values.lastName);
-      this.toastr.success('You profile has successfully updated');
+      this.authService.updateCurrentUser(values.firstName, values.lastName)
+        .subscribe({
+            next: value => {
+              this.toastr.success('You profile has successfully updated');
+            },
+            error: (error) => {
+              this.toastr.error(error || 'Something went wrong...');
+            }
+          }
+        );
     }
   }
 
@@ -58,5 +68,18 @@ export class ProfileComponent implements OnInit {
 
   validateLastName(): boolean {
     return this.lastName.valid || this.lastName.untouched;
+  }
+
+  handleLogout(): void {
+    this.authService.logoutUser().subscribe({
+      next: () => {
+        this.authService.currentUser = undefined;
+        this.router.navigate(['/user/login']);
+        this.toastr.success('You was successfully logout');
+      },
+      error: (error) => {
+        this.toastr.error(error || 'Something went wrong...');
+      }
+    });
   }
 }

@@ -1,15 +1,15 @@
-import {  Routes  } from '@angular/router';
+import { Routes } from '@angular/router';
 
 import {
-  CreateEventComponent, CreateSessionComponent,
+  CreateEventComponent,
+  CreateSessionComponent,
   EventDetailsComponent,
-  EventRouteActivator,
   EventsListComponent,
-  EventsListResolver
-} from './events/index';
+  EventsListResolver,
+  EventResolver
+} from './events';
 
 import { Error404Component } from './errors/404.component';
-
 
 export const appRoutes: Routes = [
   {
@@ -20,7 +20,7 @@ export const appRoutes: Routes = [
     path: 'events', component: EventsListComponent, resolve: { events: EventsListResolver }
   },
   {
-    path: 'events/:id', component: EventDetailsComponent, canActivate: [EventRouteActivator]
+    path: 'events/:id', component: EventDetailsComponent, resolve: { event: EventResolver }
   },
   {
     path: 'events/session/new', component: CreateSessionComponent
@@ -34,7 +34,7 @@ export const appRoutes: Routes = [
   {
     path: 'user', loadChildren: () => import('./user/user.module')
       .then(module => module.UserModule) // loads a new module, lazy
-  },
+  }
 ];
 
 

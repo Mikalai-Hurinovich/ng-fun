@@ -9,3 +9,4 @@ export * from './event-details/index';
 export * from './upvote/upvote.component';
 export * from './upvote/voter.service';
 export * from './event-create/location-validator.directive';
+export * from './event-resolver.service';
